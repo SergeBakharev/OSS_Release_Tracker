@@ -9,5 +9,5 @@ class Config:
     POLL_FREQUENCY = int(os.environ.get('POLL_FREQUENCY', 3600))
 
     # Slack configuration
-    SLACK_API_KEY = os.environ.get('SLACK_API_KEY')
-    SLACK_CHANNEL = os.environ.get('SLACK_CHANNEL')
+    SLACK_TOKEN = os.environ.get('SLACK_TOKEN')
+    SLACK_CHANNEL_ID = os.environ.get('SLACK_CHANNEL_ID')

@@ -4,6 +4,7 @@ from slack_sdk import WebClient
 from database import db
 from git import Repo
 from models import Release
+from config import Config
 import requests
 import re
 
@@ -63,8 +64,8 @@ def is_semver(tag):
 
 def send_slack_notification(repository, release):
     # Set up your Slack API token and channel information
-    slack_token = 'YOUR_SLACK_API_TOKEN'
-    channel_id = 'YOUR_SLACK_CHANNEL_ID'
+    slack_token = Config.SLACK_TOKEN
+    channel_id = Config.SLACK_CHANNEL_ID
 
     # Create a Slack client
     client = WebClient(token=slack_token)
