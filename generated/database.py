@@ -1,36 +1,17 @@
 import sqlite3
+from flask_sqlalchemy import SQLAlchemy
 
-class Database:
+db = SQLAlchemy()
+
+class Database(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    
     def __init__(self, db_file):
         self.db_file = db_file
+        self.db = db
 
     def create_tables(self):
-        conn = sqlite3.connect(self.db_file)
-        c = conn.cursor()
-
-        # Create repositories table
-        c.execute('''CREATE TABLE IF NOT EXISTS repositories
-                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      name TEXT NOT NULL,
-                      date_added TEXT NOT NULL,
-                      url TEXT NOT NULL,
-                      type TEXT NOT NULL,
-                      last_polled TEXT,
-                      notes TEXT)''')
-
-        # Create releases table
-        c.execute('''CREATE TABLE IF NOT EXISTS releases
-                     (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                      repository_id INTEGER NOT NULL,
-                      date TEXT NOT NULL,
-                      version TEXT NOT NULL,
-                      notes TEXT,
-                      url TEXT,
-                      hash TEXT,
-                      FOREIGN KEY (repository_id) REFERENCES repositories (id))''')
-
-        conn.commit()
-        conn.close()
+        self.db.create_all()
 
     def add_repository(self, name, date_added, url, type, notes):
         conn = sqlite3.connect(self.db_file)

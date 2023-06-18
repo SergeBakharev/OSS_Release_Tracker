@@ -1,11 +1,7 @@
 from datetime import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///release_tracker.db'
-db = SQLAlchemy(app)
-
+from database import db
 
 class Repository(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +11,12 @@ class Repository(db.Model):
     type = db.Column(db.String(20), nullable=False)
     last_polled = db.Column(db.DateTime)
     notes = db.Column(db.Text)
+
+    releases = db.relationship('Release', backref='repository', lazy=True)
+
+    @property
+    def latest_release(self):
+        return self.releases.order_by(Release.date.desc()).first()
 
     def __repr__(self):
         return f"Repository('{self.name}', '{self.url}')"
