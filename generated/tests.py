@@ -1,16 +1,14 @@
 import pytest
-from flask import Flask
+from flask import Flask, render_template, request, redirect, url_for
 from flask_migrate import Migrate
-from flask_restful import Api
-from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-api = Api(app)
-CORS(app)
 
 # Define the models
 
@@ -46,7 +44,7 @@ def repository_list():
 
 @app.route('/repositories/<int:repository_id>')
 def repository_detail(repository_id):
-    repository = Repository.query.get(repository_id)
+    repository = Repository.query.session.get(Repository, repository_id)
     return render_template('repository_detail.html', repository=repository)
 
 @app.route('/repositories/add', methods=['GET', 'POST'])
@@ -65,7 +63,7 @@ def repository_add():
 
 @app.route('/repositories/<int:repository_id>/update', methods=['GET', 'POST'])
 def repository_update(repository_id):
-    repository = Repository.query.get(repository_id)
+    repository = Repository.query.session.get(Repository, repository_id)
     if request.method == 'POST':
         repository.name = request.form['name']
         repository.url = request.form['url']
