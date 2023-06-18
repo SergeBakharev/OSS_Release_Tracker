@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Repository Detail</title>
+</head>
+<body>
+    <h1>Repository Detail</h1>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Version</th>
+            <th>Notes</th>
+            <th>URL</th>
+            <th>Hash</th>
+        </tr>
+        {% for release in releases %}
+        <tr>
+            <td>{{ release.date }}</td>
+            <td>{{ release.version }}</td>
+            <td>{{ release.notes }}</td>
+            <td>{{ release.url }}</td>
+            <td>{{ release.hash }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

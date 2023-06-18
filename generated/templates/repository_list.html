@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Repository List</title>
+</head>
+<body>
+    <h1>Repository List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Date Added</th>
+                <th>Latest Release</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repository in repositories %}
+            <tr>
+                <td>{{ repository.name }}</td>
+                <td>{{ repository.date_added }}</td>
+                <td>{{ repository.latest_release }}</td>
+                <td>{{ repository.notes }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
