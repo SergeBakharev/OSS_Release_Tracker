@@ -18,7 +18,7 @@
             {% for repository in repositories %}
             <tr>
                 <td><a href="{{ url_for('repository_detail', repo_id=repository.id) }}">{{ repository.name }}</a></td>
-                <td>{{ repository.latest_release.version }}</td>
+                <td>{{ repository.latest_release }}</td>
                 <td>{{ repository.notes }}</td>
             </tr>
             {% endfor %}
